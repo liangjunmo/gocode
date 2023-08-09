@@ -10,22 +10,14 @@ func (code Code) Error() string {
 	return string(code)
 }
 
-var (
-	defaultCode Code
-	successCode Code
+const (
+	DefaultCode Code = "0"
+	SuccessCode Code = "1"
 )
-
-func SetDefaultCode(code Code) {
-	defaultCode = code
-}
-
-func SetSuccessCode(code Code) {
-	successCode = code
-}
 
 func Parse(err error) Code {
 	if err == nil {
-		return successCode
+		return SuccessCode
 	}
 
 	var (
@@ -47,7 +39,7 @@ func Parse(err error) Code {
 	}
 
 	if code == "" {
-		code = defaultCode
+		code = DefaultCode
 	}
 
 	return code
