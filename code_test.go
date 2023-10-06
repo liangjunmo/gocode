@@ -11,15 +11,15 @@ import (
 
 func TestCode(t *testing.T) {
 	var err error
-	code := gocode.Parse(err)
+	code := gocode.Parse(err) // err is nil
 	assert.Equal(t, gocode.SuccessCode, code)
 
 	err = fmt.Errorf("error")
-	code = gocode.Parse(err)
+	code = gocode.Parse(err) // cannot parse err
 	assert.Equal(t, gocode.DefaultCode, code)
 
-	var notFoundCode gocode.Code = "not_found"
-	err = fmt.Errorf("%w: %s", notFoundCode, "uid 1 not found")
-	code = gocode.Parse(err)
+	var notFoundCode gocode.Code = "NotFound"
+	err = fmt.Errorf("%s: %w", "some message", notFoundCode)
+	code = gocode.Parse(err) // can parse err
 	assert.Equal(t, notFoundCode, code)
 }

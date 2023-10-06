@@ -11,8 +11,8 @@ func (code Code) Error() string {
 }
 
 const (
-	DefaultCode Code = "0"
-	SuccessCode Code = "1"
+	DefaultCode Code = "default"
+	SuccessCode Code = "success"
 )
 
 func Parse(err error) Code {
@@ -20,26 +20,20 @@ func Parse(err error) Code {
 		return SuccessCode
 	}
 
-	var (
-		code Code
-		ok   bool
-		e    = err
-	)
+	code := DefaultCode
+	e := err
 
 	for {
 		if e == nil {
 			break
 		}
 
-		if code, ok = e.(Code); ok {
+		if c, ok := e.(Code); ok {
+			code = c
 			break
 		}
 
 		e = errors.Unwrap(e)
-	}
-
-	if code == "" {
-		code = DefaultCode
 	}
 
 	return code
