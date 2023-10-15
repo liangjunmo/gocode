@@ -10,6 +10,10 @@ func (code Code) Error() string {
 	return string(code)
 }
 
+func (code Code) String() string {
+	return string(code)
+}
+
 const (
 	DefaultCode Code = "default"
 	SuccessCode Code = "success"
