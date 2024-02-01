@@ -25,19 +25,17 @@ func Parse(err error) Code {
 	}
 
 	code := DefaultCode
-	e := err
 
 	for {
-		if e == nil {
+		if err == nil {
 			break
 		}
 
-		if c, ok := e.(Code); ok {
-			code = c
+		if errors.As(err, &code) {
 			break
 		}
 
-		e = errors.Unwrap(e)
+		err = errors.Unwrap(err)
 	}
 
 	return code
